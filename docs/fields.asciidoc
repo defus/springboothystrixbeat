@@ -577,14 +577,14 @@ Kubernetes container image
 None
 
 
-*`counter`*::
+*`jvm_memory_max_value`*::
 +
 --
-type: long
+type: float
 
-required: True
+required: False
 
-PLEASE UPDATE DOCUMENTATION
+Valeur de la memoire maximale JAVA
 
 
 --

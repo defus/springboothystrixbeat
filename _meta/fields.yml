@@ -2,8 +2,8 @@
   title: springboothystrixbeat
   description:
   fields:
-    - name: counter
-      type: long
-      required: true
+    - name: "jvm_memory_max_value"
+      type: float
+      required: false
       description: >
-        PLEASE UPDATE DOCUMENTATION
+        Valeur de la memoire maximale JAVA

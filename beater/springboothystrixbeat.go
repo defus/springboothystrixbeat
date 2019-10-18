@@ -3,6 +3,7 @@ package beater
 import (
 	"fmt"
 	"time"
+	"net/url"
 
 	"github.com/elastic/beats/libbeat/beat"
 	"github.com/elastic/beats/libbeat/common"
@@ -29,6 +30,17 @@ func New(b *beat.Beat, cfg *common.Config) (beat.Beater, error) {
 		done:   make(chan struct{}),
 		config: c,
 	}
+
+	_, err := url.Parse(c.Host)
+        if err != nil {
+                logp.Err("Invalid Spring Boot URL: %v", err)
+                return nil, err
+        }
+
+	logp.Debug("springboothystrixbeat", "Init springboothystrixbeat")
+	logp.Debug("springboothystrixbeat", "Period %v\n", bt.config.Period)
+	logp.Debug("springboothystrixbeat", "Watch %v", c.Host)
+
 	return bt, nil
 }
 
@@ -43,24 +55,25 @@ func (bt *Springboothystrixbeat) Run(b *beat.Beat) error {
 	}
 
 	ticker := time.NewTicker(bt.config.Period)
-	counter := 1
 	for {
+		//Générr l'evenement en recuperant la data de actuator
+                bt.ProcessMetricsActuator(b)
 		select {
 		case <-bt.done:
 			return nil
 		case <-ticker.C:
 		}
 
-		event := beat.Event{
-			Timestamp: time.Now(),
-			Fields: common.MapStr{
-				"type":    b.Info.Name,
-				"counter": counter,
-			},
-		}
-		bt.client.Publish(event)
-		logp.Info("Event sent")
-		counter++
+//		event := beat.Event{
+//			Timestamp: time.Now(),
+//			Fields: common.MapStr{
+//				"type":    b.Info.Name,
+//				"counter": counter,
+//			},
+//		}
+//		bt.client.Publish(event)
+//		logp.Info("Event sent")
+//		counter++
 	}
 }
 

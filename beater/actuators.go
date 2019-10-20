@@ -90,13 +90,13 @@ func (bt *Springboothystrixbeat) ProcessMetricsActuator(b *beat.Beat) {
     // Fetch all available Metric Endpoints
     response, err := DoHttpGet(url)
     if err != nil {
-	    logp.Err("Error loading metrics: %v\n", err)
+	    logp.Err("Error loading metrics: %v", err)
 	    return
     }
 
     list     := MetricsList{}
     json.Unmarshal(response.Body, &list)
-    logp.Debug("Liste des métriques : %v\n", fmt.Sprintf("%v", list))
+    logp.Debug("springboothystrixbeat", "Liste des métriques : %v", fmt.Sprintf("%v", list))
 
     // Commit Metric Requests
     requests := 0
@@ -120,7 +120,8 @@ func (bt *Springboothystrixbeat) ProcessMetricsActuator(b *beat.Beat) {
     fields := common.MapStr{
         "type": b.Info.Name,
     }
-    logp.Info(fmt.Sprintf("%d - %d", len(list.Names), requests))
+    logp.Debug("springboothystrixbeat", fmt.Sprintf("Nombre total de métriques actuator disponbles: %d - Nombre de valeur de métriques actuator recupérées: %d", len(list.Names), requests))
+
     // Join Results to Event
     expr := regexp.MustCompile(`(\.|:)`)
     for it := 0; it < len(list.Names); it++ {

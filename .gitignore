@@ -2,6 +2,4 @@
 /build
 
 .DS_Store
-/springboothystrixbeat
-/springboothystrixbeat.test
 *.pyc

@@ -577,14 +577,86 @@ Kubernetes container image
 None
 
 
-*`jvm_memory_max_value`*::
+*`hystrix_execution`*::
 +
 --
 type: float
 
-required: False
+required: True
 
-Valeur de la memoire maximale JAVA
+Valeur de hystrix.execution
+
+
+--
+
+*`hystrix_concurrent_execution_rolling_max`*::
++
+--
+type: float
+
+required: True
+
+Valeur de hystrix.concurrent.execution.rolling.max
+
+
+--
+
+*`hystrix_concurrent_execution_current`*::
++
+--
+type: float
+
+required: True
+
+Valeur de hystrix.concurrent.execution.current
+
+
+--
+
+*`hystrix_circuit_breaker_open`*::
++
+--
+type: float
+
+required: True
+
+Valeur de hystrix.circuit.breaker.open
+
+
+--
+
+*`hystrix_latency_execution`*::
++
+--
+type: float
+
+required: True
+
+Valeur de hystrix.latency.execution
+
+
+--
+
+*`hystrix_execution_terminal`*::
++
+--
+type: float
+
+required: True
+
+Valeur de hystrix.execution.terminal
+
+
+--
+
+*`hystrix_latency_total`*::
++
+--
+type: float
+
+required: True
+
+Valeur de hystrix.execution.terminal
 
 
 --

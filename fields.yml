@@ -2,11 +2,41 @@
   title: springboothystrixbeat
   description:
   fields:
-    - name: "jvm_memory_max_value"
+    - name: "hystrix_execution"
       type: float
-      required: false
+      required: true
       description: >
-        Valeur de la memoire maximale JAVA
+        Valeur de hystrix.execution
+    - name: "hystrix_concurrent_execution_rolling_max"
+      type: float
+      required: true
+      description: >
+        Valeur de hystrix.concurrent.execution.rolling.max
+    - name: "hystrix_concurrent_execution_current"
+      type: float
+      required: true
+      description: >
+        Valeur de hystrix.concurrent.execution.current
+    - name: "hystrix_circuit_breaker_open"
+      type: float
+      required: true
+      description: >
+        Valeur de hystrix.circuit.breaker.open
+    - name: "hystrix_latency_execution"
+      type: float
+      required: true
+      description: >
+        Valeur de hystrix.latency.execution
+    - name: "hystrix_execution_terminal"
+      type: float
+      required: true
+      description: >
+        Valeur de hystrix.execution.terminal
+    - name: "hystrix_latency_total"
+      type: float
+      required: true
+      description: >
+        Valeur de hystrix.execution.terminal
 
 - key: beat
   title: Beat

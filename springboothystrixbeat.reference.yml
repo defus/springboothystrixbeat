@@ -5,6 +5,8 @@
 springboothystrixbeat:
   # Defines how often an event is sent to the output
   period: 1s
+  # Verify SSL certificate
+  InsecureSkipVerify: true
   # Spring Boot 2 - Managment Adress
   host: "http://127.0.0.1:9001"
   # List of Metrics that shall be includes in the collection

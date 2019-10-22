@@ -5,6 +5,7 @@ import(
     "time"
     "strings"
     "regexp"
+    "crypto/tls"
 
     "net/http"
     "io/ioutil"
@@ -53,9 +54,14 @@ type Measurement struct {
 // @param url
 // @param ch
 //
-func DoHttpGet(url string) (*HttpResponse, error) {
+func DoHttpGet(url string, insecureSkipVerify bool) (*HttpResponse, error) {
+    tr := &http.Transport{
+        TLSClientConfig: &tls.Config{InsecureSkipVerify: insecureSkipVerify},
+    }
+
     client := http.Client{
         Timeout: time.Duration(10 * time.Second),
+	Transport: tr,
     }
     request, _ := http.NewRequest("GET", url, nil)
     // TODO -- add basic auth
@@ -88,7 +94,7 @@ func (bt *Springboothystrixbeat) ProcessMetricsActuator(b *beat.Beat) {
     url := fmt.Sprintf("%s/actuator/metrics", bt.config.Host)
 
     // Fetch all available Metric Endpoints
-    response, err := DoHttpGet(url)
+    response, err := DoHttpGet(url, bt.config.InsecureSkipVerify)
     if err != nil {
 	    logp.Err("Error loading metrics: %v", err)
 	    return
@@ -105,7 +111,7 @@ func (bt *Springboothystrixbeat) ProcessMetricsActuator(b *beat.Beat) {
     for i, metric := range(list.Names) {
 	var response HttpResponse
         if existsIn(metric, bt.config.Include) == true {
-	    res, err := DoHttpGet(fmt.Sprintf("%s/%s", url, metric))
+	    res, err := DoHttpGet(fmt.Sprintf("%s/%s", url, metric), bt.config.InsecureSkipVerify)
 	    if err == nil {
 		response = *res
                 requests++
